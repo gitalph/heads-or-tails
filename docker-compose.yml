@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+  heads-or-tails:
+    image: heads-or-tails
+    build: .
+    environment:
+      NODE_ENV: production
+      ENDPOINT_URL: "https://heads-or-tails.chernov.us"
+      SECRET: xxx
+      MONGO_URL: "mongodb://"
+    ports:
+      - 3000:3000

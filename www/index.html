@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample Game</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <style>
+        body { padding-top:50px; }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <input type="text" id="userSession" class="form-control classname" value="" readonly />
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Coin flipping!</h1>
+        </div>
+    </div>
+
+    <input type="text" id="userData" class="form-control classname" value="{}" readonly />
+    <p>Your bet: <input type="number" id="bet" value="0"> <input type="submit" id="flip" value="Flip"></p>
+    <script>
+        document.querySelector('#userSession').value = new Map(window.location.search.slice(1).split('&').map(kv => kv.split('='))).get('session')
+        document.querySelector('#flip').onclick = function() {
+            $.ajax('flip', {
+                data : JSON.stringify({
+                    bet: parseInt(document.querySelector('#bet').value),
+                    session: document.querySelector('#userSession').value
+                }),
+                contentType : 'application/json',
+                type : 'POST',
+                success: data => document.querySelector('#userData').value = JSON.stringify(data)
+            }) 
+        };
+        document.querySelector('#flip').click()
+    </script>
+    
+</body>
+</html>
